@@ -3,12 +3,16 @@
 import { useState,useEffect } from "react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
+import { useSearchParams } from 'next/navigation'
 
 import Profile from "@components/profile"
 
 const Profile2 = () => {
   const router=useRouter()
-  const { data:session }=useSession()
+  const searchParams = useSearchParams()
+  const id = searchParams.get('id')
+  // const { data:session }=useSession()
+  const [creatorid, setcreatorid] = useState(id)
   const [posts, setposts] = useState([])
   const [profilename, setprofilename] = useState('')
   const handleEdit=(post)=>{
@@ -31,7 +35,7 @@ const Profile2 = () => {
    }
   }
   const fetchPosts=async ()=>{
-    const response= await fetch(`/api/users/${session?.user.id}/posts`);
+    const response= await fetch(`/api/users/${creatorid}/posts`);
     const data= await response.json();
     setposts(data)
     if(data){
@@ -39,7 +43,7 @@ const Profile2 = () => {
     }
    }
   useEffect(()=>{
-    if(session?.user.id)
+    if(creatorid)
     {fetchPosts();}
   },[])
   return (

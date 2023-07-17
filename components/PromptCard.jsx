@@ -20,7 +20,7 @@ const PromptCard = ({ post,handleTagClick,handleEdit,handleDelete }) => {
     <div className="prompt_card">
       <div className="flex justify-between items-start gap-5">
         <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
-          <Link href='/profile'>
+          <Link href={`/profile?id=${post.creator._id}`}>
           <Image
           src={post.creator.image}
           alt="user_image"
